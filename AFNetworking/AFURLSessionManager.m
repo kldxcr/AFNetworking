@@ -927,12 +927,20 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     __block NSURLCredential *credential = nil;
-    NSLog(@"===============");
+    /*
+     * 获取原始域名信息。
+     */
+    NSString* host = challenge.protectionSpace.host;
+    if(challenge.protectionSpace.host&&UNHttpDNSShoujiIP()&&[UNHttpDNSShoujiIP() containsString:challenge.protectionSpace.host]){
+        host = @"shouji.2345.com";
+    }else if (challenge.protectionSpace.host&&UNHttpDNSJifenIP()&&[UNHttpDNSJifenIP() containsString:challenge.protectionSpace.host]){
+        host = @"jifen.2345.com";
+    }
     if (self.sessionDidReceiveAuthenticationChallenge) {
         disposition = self.sessionDidReceiveAuthenticationChallenge(session, challenge, &credential);
     } else {
         if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-            if ([self.securityPolicy evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:challenge.protectionSpace.host]) {
+            if ([self.securityPolicy evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:host]) {
                 credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
                 if (credential) {
                     disposition = NSURLSessionAuthChallengeUseCredential;
@@ -978,12 +986,20 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     __block NSURLCredential *credential = nil;
-    NSLog(@"===============");
+    /*
+     * 获取原始域名信息。
+     */
+    NSString* host = challenge.protectionSpace.host;
+    if(challenge.protectionSpace.host&&UNHttpDNSShoujiIP()&&[UNHttpDNSShoujiIP() containsString:challenge.protectionSpace.host]){
+        host = @"shouji.2345.com";
+    }else if (challenge.protectionSpace.host&&UNHttpDNSJifenIP()&&[UNHttpDNSJifenIP() containsString:challenge.protectionSpace.host]){
+        host = @"jifen.2345.com";
+    }
     if (self.taskDidReceiveAuthenticationChallenge) {
         disposition = self.taskDidReceiveAuthenticationChallenge(session, task, challenge, &credential);
     } else {
         if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-            if ([self.securityPolicy evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:challenge.protectionSpace.host]) {
+            if ([self.securityPolicy evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:host]) {
                 disposition = NSURLSessionAuthChallengeUseCredential;
                 credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
             } else {
