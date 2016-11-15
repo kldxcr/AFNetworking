@@ -927,7 +927,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     __block NSURLCredential *credential = nil;
-
+    NSLog(@"===============");
     if (self.sessionDidReceiveAuthenticationChallenge) {
         disposition = self.sessionDidReceiveAuthenticationChallenge(session, challenge, &credential);
     } else {
@@ -978,7 +978,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     __block NSURLCredential *credential = nil;
-
+    NSLog(@"===============");
     if (self.taskDidReceiveAuthenticationChallenge) {
         disposition = self.taskDidReceiveAuthenticationChallenge(session, task, challenge, &credential);
     } else {
